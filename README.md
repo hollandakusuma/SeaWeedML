@@ -11,6 +11,7 @@ Sensor AS7265x perlu diintegrasikan dengan mikrokontroler untuk memperoleh data 
 Karakterisasi spektral kandungan air pada _K. alvarezii_ di wilayah Kepulauan Riau atau Indonesia pada umumnya merupakan bidang yang belum banyak diteliti secara komprehensif. Sementara penelitian telah mengevaluasi pertumbuhan dan kualitas produk _K. alvarezii_ di berbagai lokasi budidaya di Indonesia [25], menilai kesesuaian perairan untuk budidayanya di Kepulauan Obi [26], dan mengevaluasi kesesuaian air untuk keberlanjutannya. budidaya di Kalimantan Utara [27], tidak ada yang secara khusus berfokus pada karakterisasi spektral kandungan air. Kesenjangan ini memberikan peluang untuk mengeksplorasi potensi penggunaan karakterisasi spektral untuk menilai kandungan air di _K. alvarezii_. Oleh karena itu, penelitian ini bertujuan untuk mengisi kesenjangan pengetahuan tersebut dengan menggunakan sensor spektroskopi AS7265x. Dengan memanfaatkan sensor spektroskopi AS7265x dan _machine learning_, diharapkan penelitian ini dapat memberikan kontribusi dalam pemahaman yang lebih baik tentang hubungan antara karakteristik spektral dengan kandungan air dalam rumput laut _K. alvarezii_. 
 
 **Daftar Pustaka**:
+
 [1]	R. Rama, L. Ode Muhammad Aslan, W. Iba, A. R. Nurdin, A. Armin, and Y. Yusnaeni, “Seaweed Cultivation of Micropropagated Seaweed (Kappaphycus alvarezii) in Bungin Permai Coastal Waters, Tinanggea Sub-District, South Konawe Regency, South East Sulawesi.,” IOP Conf. Ser. Earth Environ. Sci., vol. 175, p. 012219, Jul. 2018, doi: 10.1088/1755-1315/175/1/012219.
 
 [2]	A. F. Ilhamdy, Jumsurizal, W. K. Shabilla, and G. Pratama, “Sifat Fisiko-Kimia Semi Refined Carrageenan (SRC) Kappaphycus Alvarezii Dari Perairan Karimun, Kepulauan Riau, Indonesia,” J. Perikan. dan Kelaut., vol. 9, no. 1, pp. 125–136, 2019, [Online]. Available: https://jurnal.untirta.ac.id/index.php/jpk/article/view/7079
@@ -68,10 +69,6 @@ Karakterisasi spektral kandungan air pada _K. alvarezii_ di wilayah Kepulauan Ri
 
 ## Business Understanding
 
-Pada bagian ini, kamu perlu menjelaskan proses klarifikasi masalah.
-
-Bagian laporan ini mencakup:
-
 ### Problem Statements
 Rumusan Masalah dalam penelitian ini ialah:
 1. Bagaimana cara mengelola data intensitas reflektansi cahaya yang berasal dari berbagai panjang gelombang untuk menghasilkan prediksi kadar air yang akurat?
@@ -106,6 +103,13 @@ Dalam tahap pemahaman data ini, penting untuk mengidentifikasi pola dalam hubung
 
 ### Variabel-variabel pada dataset Intensitas Reflektansi Rumput Laut adalah sebagai berikut:
 1. Fitur Input (X):
+| Nama       | Umur | Kota          |
+|:-----------|-----:|:-------------:|
+| Andi       |   25 |   Jakarta     |
+| Budi       |   30 |   Surabaya    |
+| Citra      |   22 |   Bandung     |
+
+
     - Kanal A (410nm, Violet): Intensitas reflektansi cahaya pada panjang gelombang 410nm
     - Kanal B (435nm, Violet – Biru): Intensitas reflektansi cahaya pada panjang gelombang 435nm
     - Kanal C (460nm, Biru): Intensitas reflektansi cahaya pada panjang gelombang 460nm
@@ -125,7 +129,7 @@ Dalam tahap pemahaman data ini, penting untuk mengidentifikasi pola dalam hubung
     - Kanal K (900nm, Infra merah dekat): Intensitas reflektansi cahaya pada panjang gelombang 900nm
     - Kanal L (940nm, Infra merah dekat): Intensitas reflektansi cahaya pada panjang gelombang 940nm
 
-2. Target Output (y):
+3. Target Output (y):
     - Kadar Air Rumput Laut: Nilai kontinu yang menunjukkan kadar air dalam rumput laut yang diukur pada saat pengambilan data reflektansi dari sensor.
 
 **Rubrik/Kriteria Tambahan (Opsional)**:
