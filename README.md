@@ -1,7 +1,4 @@
-# SeaWeedML
-Machine Learning for Seaweed Kappaphycus Alvarezii
-
-# Laporan Proyek Machine Learning Kadar Air Rumput Laut Kappaphycus Alvarezii - Hollanda Arief Kusuma
+# Proyek Machine Learning Kadar Air Rumput Laut Kappaphycus Alvarezii - Hollanda Arief Kusuma
 
 ## Domain Proyek
 _Kappaphycus alvarezii_ (_K. alvarezii_), juga dikenal sebagai _Eucheuma cottonii_, adalah spesies rumput laut merah penting secara komersial yang ditemukan di perairan tropis [1]. Rumput laut ini dijumpai di Kepulauan Riau terutama di Kabupaten Karimun, Kabupaten Natuna, dan Kabupaten Lingga [2]–[4]. Rumput laut ini memiliki potensi ekonomi yang besar sebagai sumber bahan baku dalam industri pangan, farmasi, dan kosmetik [5]. Pertumbuhan dan kesehatan rumput laut ini sangat dipengaruhi oleh faktor lingkungan, terutama ketersediaan air dan kandungan air dalam jaringannya [6]. 
@@ -92,6 +89,7 @@ Rumusan Masalah dalam penelitian ini ialah:
 
 ## Data Understanding
 Proyek ini menggunakan data yang dihasilkan oleh sensor AS7265X, yang merupakan sensor multi-channel yang mengukur reflektansi cahaya dalam 18 channel, mencakup cahaya tampak dan infrared. Setiap channel sensor ini sensitif terhadap panjang gelombang cahaya tertentu, yang mencakup berbagai spektrum mulai dari cahaya tampak (400-700 nm) hingga infrared. Data yang diperoleh dari sensor ini berfungsi untuk memprediksi kadar air rumput laut berdasarkan intensitas cahaya yang dipantulkan oleh rumput laut pada panjang gelombang tertentu.
+
 
 Data yang digunakan dalam proyek ini terdiri dari dua komponen utama:
 1. **Fitur Input (X)**: Intensitas reflektansi cahaya yang diukur pada 18 channel sensor AS7265X. Setiap channel mengukur tingkat reflektansi pada panjang gelombang tertentu, yang memberikan gambaran tentang karakteristik optik rumput laut pada spektrum yang berbeda.
