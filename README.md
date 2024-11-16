@@ -89,7 +89,7 @@ Rumusan Masalah dalam penelitian ini ialah:
 
 ## Data Understanding
 Proyek ini menggunakan data yang dihasilkan oleh sensor AS7265X, yang merupakan sensor multi-channel yang mengukur reflektansi cahaya dalam 18 channel, mencakup cahaya tampak dan infrared. Setiap channel sensor ini sensitif terhadap panjang gelombang cahaya tertentu, yang mencakup berbagai spektrum mulai dari cahaya tampak (400-700 nm) hingga infrared. Data yang diperoleh dari sensor ini berfungsi untuk memprediksi kadar air rumput laut berdasarkan intensitas cahaya yang dipantulkan oleh rumput laut pada panjang gelombang tertentu.
-
+![Perangkat dengan sensor AS7265X](https://github.com/hollandakusuma/repo/raw/main/SeaSpec.jpg)
 
 Data yang digunakan dalam proyek ini terdiri dari dua komponen utama:
 1. **Fitur Input (X)**: Intensitas reflektansi cahaya yang diukur pada 18 channel sensor AS7265X. Setiap channel mengukur tingkat reflektansi pada panjang gelombang tertentu, yang memberikan gambaran tentang karakteristik optik rumput laut pada spektrum yang berbeda.
