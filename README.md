@@ -7,7 +7,7 @@ Metode konvensional dalam mengukur kadar air dalam rumput laut menghadapi bebera
 Sensor AS7265x perlu diintegrasikan dengan mikrokontroler untuk memperoleh data secara akurat dan efisien. Perangkat akuisisi data merupakan integrasi antara sensor, mikrokontroler, micro SD, Real Time Clock, display, dan komponen lainnya yang akan membuat sebuah perangkat akuisisi data yang dapat melakukan pengambilan, penyimpanan, dan tampilan data secara efektif dan efisien. Mikrokontroler berperan sebagai otak sistem yang mengatur operasi dan interaksi antara semua komponen tersebut. Beberapa penelitian menggunakan Arduino [16]–[21] dan ESP32 [21]–[23]. Namun Refly dan Kusuma [24] menyampaikan bahwa ESP32 lebih rendah konsumsi dayanya daripada Arduino. Oleh karena itu, pemilihan mikrokontroler dengan konsumsi daya yang rendah, seperti ESP32, menjadi krusial untuk memastikan kinerja perangkat akuisisi data secara optimal.
 Karakterisasi spektral kandungan air pada _K. alvarezii_ di wilayah Kepulauan Riau atau Indonesia pada umumnya merupakan bidang yang belum banyak diteliti secara komprehensif. Sementara penelitian telah mengevaluasi pertumbuhan dan kualitas produk _K. alvarezii_ di berbagai lokasi budidaya di Indonesia [25], menilai kesesuaian perairan untuk budidayanya di Kepulauan Obi [26], dan mengevaluasi kesesuaian air untuk keberlanjutannya. budidaya di Kalimantan Utara [27], tidak ada yang secara khusus berfokus pada karakterisasi spektral kandungan air. Kesenjangan ini memberikan peluang untuk mengeksplorasi potensi penggunaan karakterisasi spektral untuk menilai kandungan air di _K. alvarezii_. Oleh karena itu, penelitian ini bertujuan untuk mengisi kesenjangan pengetahuan tersebut dengan menggunakan sensor spektroskopi AS7265x. Dengan memanfaatkan sensor spektroskopi AS7265x dan _machine learning_, diharapkan penelitian ini dapat memberikan kontribusi dalam pemahaman yang lebih baik tentang hubungan antara karakteristik spektral dengan kandungan air dalam rumput laut _K. alvarezii_. 
 
-**Daftar Pustaka**:
+### Daftar Pustaka:
 
 [1]	R. Rama, L. Ode Muhammad Aslan, W. Iba, A. R. Nurdin, A. Armin, and Y. Yusnaeni, “Seaweed Cultivation of Micropropagated Seaweed (Kappaphycus alvarezii) in Bungin Permai Coastal Waters, Tinanggea Sub-District, South Konawe Regency, South East Sulawesi.,” IOP Conf. Ser. Earth Environ. Sci., vol. 175, p. 012219, Jul. 2018, doi: 10.1088/1755-1315/175/1/012219.
 
@@ -70,13 +70,13 @@ Karakterisasi spektral kandungan air pada _K. alvarezii_ di wilayah Kepulauan Ri
 Rumusan Masalah dalam penelitian ini ialah:
 1. Bagaimana cara mengelola data intensitas reflektansi cahaya yang berasal dari berbagai panjang gelombang untuk menghasilkan prediksi kadar air yang akurat?
 2. Algoritma machine learning mana yang paling cocok untuk memodelkan hubungan antara data sensor dan kadar air rumput laut?
-3. Apa fitur-fitur penting yang harus diperhatikan dalam pengolahan data, mengingat adanya pengaruh dominan dari channel tertentu pada sensor?
 
 ### Goals
 1. Menentukan solusi berbasis machine learning untuk memprediksi kadar air rumput laut menggunakan data intensitas reflektansi dari sensor AS7265X.
 2. Mengidentifikasi channel-channel sensor yang paling relevan dalam menentukan kadar air, berdasarkan sensitivitas panjang gelombangnya terhadap kadar air.
-3. Membangun dan mengoptimalkan model prediksi, dengan menggunakan algoritma seperti neural network dan random forest, serta melakukan hyperparameter tuning untuk meningkatkan akurasi model.
-4. Mengembangkan sistem yang terukur dengan metrik evaluasi yang jelas, seperti MAE (Mean Absolute Error) atau RMSE (Root Mean Squared Error), untuk memastikan kinerja model yang dapat diandalkan.
+3. Membangun dan membandingkan model prediksi, dengan menggunakan algoritma seperti (a) random forest, (b) multi-layer perceptron regresi, (c) KNN, (d) AdaBoost, (e) GradienBoost, (f) MLP deep learning, dan (g) Decision Tree.
+4. Mengembangkan sistem yang terukur dengan metrik evaluasi yang jelas, seperti MSE (*Mean Square Error*), R² (Koefisien Determinasi), MAE (*Mean Absolute Error*) atau RMSE (*Root Mean Squared Error*), untuk memastikan kinerja model yang dapat diandalkan.
+5. Melakukan pengujian model dengan melakukan prediksi terhadap data yang ada.
 
 ### Solution statements
 1. Data Preprocessing: Menggunakan teknik normalisasi untuk menyiapkan data intensitas reflektansi dari 18 channel sensor AS7265X agar dapat diolah oleh model machine learning.
@@ -91,7 +91,6 @@ Rumusan Masalah dalam penelitian ini ialah:
 Proyek ini menggunakan data yang dihasilkan oleh sensor AS7265X, yang merupakan sensor multi-channel yang mengukur reflektansi cahaya dalam 18 channel, mencakup cahaya tampak dan infrared. Setiap channel sensor ini sensitif terhadap panjang gelombang cahaya tertentu, yang mencakup berbagai spektrum mulai dari cahaya tampak (400-700 nm) hingga infrared. Data yang diperoleh dari sensor ini berfungsi untuk memprediksi kadar air rumput laut berdasarkan intensitas cahaya yang dipantulkan oleh rumput laut pada panjang gelombang tertentu.
 ![SeaSpec](https://github.com/user-attachments/assets/85303a0e-11bb-4aa5-968d-6c1e6e0aa59d)
 
-
 Data yang digunakan dalam proyek ini terdiri dari dua komponen utama:
 1. **Fitur Input (X)**: Intensitas reflektansi cahaya yang diukur pada 18 channel sensor AS7265X. Setiap channel mengukur tingkat reflektansi pada panjang gelombang tertentu, yang memberikan gambaran tentang karakteristik optik rumput laut pada spektrum yang berbeda.
 2. **Target Output (y)**: Nilai kadar air rumput laut yang diukur pada saat yang sama dengan pengambilan data reflektansi. Nilai ini adalah target yang ingin diprediksi oleh model machine learning.
@@ -101,7 +100,7 @@ Setiap pengukuran dilakukan dalam satu set data yang mencakup 18 nilai intensita
 Dalam tahap pemahaman data ini, penting untuk mengidentifikasi pola dalam hubungan antara intensitas reflektansi pada setiap channel dengan kadar air rumput laut. Analisis ini juga melibatkan penanganan data yang hilang atau noise yang mungkin ada dalam data sensor, serta normalisasi data agar model machine learning dapat mengolah data secara efektif.
 
 ### Variabel-variabel pada dataset Intensitas Reflektansi Rumput Laut adalah sebagai berikut:
-1. **Fitur Input (X)**:
+**1. Fitur Input (X)**:
    
 | Kanal     | Panjang Gelombang (nm) | Warna          |
 |:-----------|:-----:|:-------------:|
@@ -124,46 +123,348 @@ Dalam tahap pemahaman data ini, penting untuk mengidentifikasi pola dalam hubung
 | Kanal K |900| Infra merah dekat|
 | Kanal L |940| Infra merah dekat|
 
-2. Target Output (y):
+**2. Target Output (y)**:
     - **Kadar Air Rumput Laut**: Nilai kontinu yang menunjukkan kadar air dalam rumput laut yang diukur pada saat pengambilan data reflektansi dari sensor.
 
-3. Jumlah Dataset :
-
-   - 
-5. 
-**Rubrik/Kriteria Tambahan (Opsional)**:
-- Melakukan beberapa tahapan yang diperlukan untuk memahami data, contohnya teknik visualisasi data atau exploratory data analysis.
+**3. URL Dataset** : (https://tinyurl.com/datarumputlaut)
+   
+**Tahapan Data Understanding**:
+- Data Loading : Import data dari google drive
+- Preview Data: Menampilkan struktur dataset.
+- Statistik Deskriptif: Rata-rata, standar deviasi, dll.
+- Distribusi Data: Histogram untuk setiap kanal.
+- Matriks Korelasi: Visualisasi hubungan antar kanal dan target.
+- Outliers: Deteksi menggunakan boxplot.
+- Scatter Plot: Hubungan antar kanal reflektansi dan nilai R².
+- Distribusi Target: Distribusi kadar air.
 
 ## Data Preparation
-Pada bagian ini Anda menerapkan dan menyebutkan teknik data preparation yang dilakukan. Teknik yang digunakan pada notebook dan laporan harus berurutan.
+### 1. Standarisasi Data
 
-**Rubrik/Kriteria Tambahan (Opsional)**: 
-- Menjelaskan proses data preparation yang dilakukan
-- Menjelaskan alasan mengapa diperlukan tahapan data preparation tersebut.
+Standarisasi nilai adalah langkah penting dalam **pra-pemrosesan data** sebelum melakukan analisis atau pembangunan model, terutama ketika menggunakan metode seperti **Principal Component Analysis (PCA)**, **regresi**, dan **klasifikasi**. Tujuan dari standarisasi adalah untuk mengubah skala fitur (variabel) sehingga setiap fitur memiliki rata-rata 0 dan deviasi standar 1. Proses ini membantu memastikan bahwa semua fitur memiliki kontribusi yang setara dalam model, mencegah fitur dengan skala lebih besar mendominasi proses analisis.
 
+Standarisasi dilakukan dengan cara berikut:
+
+$$
+x_{\text{scaled}} = \frac{x - \mu}{\sigma}
+$$
+
+Dimana:
+- (x) adalah nilai data mentah,
+- (μ) adalah rata-rata dari data,
+- (σ) adalah deviasi standar dari data.
+
+### Implementasi dengan Python (Menggunakan `StandardScaler` dari `sklearn`):
+
+```python
+from sklearn.preprocessing import StandardScaler
+
+# Inisialisasi objek StandardScaler
+scaler = StandardScaler()
+
+# Standarisasi data (misalnya, 'data' adalah DataFrame Anda)
+data_scaled = scaler.fit_transform(data.drop(columns=['Kadar Air']))  # Menghapus kolom target 'Kadar Air'
+```
+
+### 2. Reduksi Dimensi dengan PCA
+
+PCA adalah teknik yang digunakan untuk mengurangi jumlah fitur dengan cara mengubah fitur yang ada menjadi kombinasi linier yang lebih sedikit tetapi tetap mempertahankan sebanyak mungkin varians (informasi) dari data asli. Teknik ini sangat berguna jika Anda memiliki banyak kanal dan ingin mengurangi kompleksitas data tanpa kehilangan banyak informasi penting. PCA membantu kita untuk memahami struktur data dan memvisualisasikan data yang kompleks dengan cara yang lebih sederhana.
+
+**Tujuan utama dari PCA** adalah untuk mengurangi jumlah fitur (dimensi) dalam dataset, sambil mempertahankan sebanyak mungkin variasi yang ada. Dengan kata lain, PCA berusaha menemukan proyeksi data dalam ruang dimensi yang lebih rendah, yang menjelaskan variasi terbesar di dalam data.
+
+Pada langkah ini, PCA (Principal Component Analysis) digunakan untuk mengurangi dimensi data dengan cara memilih jumlah komponen yang optimal. Langkah-langkah yang dilakukan adalah sebagai berikut:
+
+1. **Standarisasi Data**: Sebelum melakukan PCA, data harus distandarisasi agar setiap fitur memiliki skala yang sama. Hal ini penting karena PCA peka terhadap skala data.
+  
+2. **Menghitung Explained Variance**: Melakukan perhitungan untuk melihat seberapa banyak variansi yang dijelaskan oleh setiap komponen utama. Dengan memeriksa nilai *explained variance* dan *cumulative variance*, kita memilih jumlah komponen yang cukup untuk menjelaskan sebagian besar variansi data (misalnya, 95%).
+
+3. **Heatmap Kontribusi Kanal terhadap Komponen PCA**: Setelah memilih jumlah komponen yang optimal, kita menghitung kontribusi setiap kanal sensor terhadap komponen utama dan memvisualisasikan hasilnya dalam bentuk heatmap untuk melihat hubungan antar kanal dengan komponen utama.
+
+```python
+import matplotlib.pyplot as plt
+import numpy as np
+from sklearn.decomposition import PCA
+from sklearn.preprocessing import StandardScaler
+import seaborn as sns
+
+# Standarisasi data (misalnya data adalah DataFrame yang berisi kanal-kanal)
+scaler = StandardScaler()
+data_scaled = scaler.fit_transform(data.drop(columns=['Kadar Air']))  # Menghapus target 'Kadar Air'
+
+# Inisialisasi PCA dan fit pada data
+pca = PCA()
+pca.fit(data_scaled)
+
+# Plot explained variance
+plt.figure(figsize=(8, 6))
+plt.bar(range(1, len(pca.explained_variance_ratio_) + 1), pca.explained_variance_ratio_)
+plt.xlabel('PCA Komponen')
+plt.ylabel('Varians yang Dijelaskan')
+plt.title('Explained Variance untuk Setiap Komponen PCA')
+plt.xticks(np.arange(1, len(pca.explained_variance_ratio_) + 1, 1))
+plt.show()
+
+# Menampilkan total explained variance kumulatif
+explained_variance_cumulative = np.cumsum(pca.explained_variance_ratio_)
+plt.figure(figsize=(8, 6))
+plt.plot(range(1, len(explained_variance_cumulative) + 1), explained_variance_cumulative, marker='o', color='b')
+plt.xlabel('Jumlah Komponen PCA')
+plt.ylabel('Kumulatif Varians yang Dijelaskan')
+plt.title('Kumulatif Varians yang Dijelaskan oleh PCA')
+plt.xticks(np.arange(1, len(pca.explained_variance_ratio_) + 1, 1))
+plt.grid(True)
+plt.show()
+
+# Pilih jumlah komponen PCA yang sesuai (misalnya 6)
+pca = PCA(n_components=6)
+data_pca = pca.fit_transform(data_scaled)
+
+# Visualisasi Heatmap Kontribusi Setiap Kanal terhadap Komponen PCA
+pca_components = pca.components_  # Eigenvectors sebagai kontribusi kanal terhadap komponen
+
+plt.figure(figsize=(10, 6))
+sns.heatmap(pca_components, cmap='coolwarm', annot=True, xticklabels=data.drop(columns=['Kadar Air']).columns, 
+            yticklabels=[f'Komponen {i+1}' for i in range(6)])
+plt.title('Kontribusi Setiap Kanal terhadap 6 Komponen PCA')
+plt.xlabel('Kanal Sensor')
+plt.ylabel('PCA Komponen')
+plt.show()
+```
+
+Penjelasan Kode
+1. **Standarisasi Data**: Data fitur distandarisasi agar setiap fitur memiliki rata-rata 0 dan deviasi standar 1 menggunakan `StandardScaler`.
+2. **PCA**: Komponen utama dihitung dengan menggunakan `PCA()` dari `sklearn.decomposition`. Jumlah komponen yang digunakan ditentukan berdasarkan varians yang dijelaskan.
+3. **Visualisasi Explained Variance**: Bar chart menggambarkan seberapa besar varians yang dijelaskan oleh masing-masing komponen utama.
+4. **Heatmap Kontribusi**: Heatmap ini menggambarkan kontribusi setiap kanal sensor terhadap komponen-komponen utama. Setiap sel menunjukkan kontribusi relatif antara kanal dan komponen PCA.
+
+
+### 3. Train-Test-Split
+
+Pada langkah ini, kita membagi dataset menjadi dua bagian: satu untuk pelatihan (training) dan satu lagi untuk pengujian (testing). Pembagian ini penting untuk memastikan bahwa model yang dibangun dapat dievaluasi secara objektif menggunakan data yang belum pernah dilihat sebelumnya oleh model.
+
+- **Data X**: Merupakan data komponen PCA yang telah dihasilkan dari proses PCA sebelumnya.
+- **Data Y**: Merupakan data kadar air yang menjadi target atau label yang ingin diprediksi.
+
+Proses pembagian dilakukan dengan menggunakan fungsi `train_test_split` dari *scikit-learn*. Pembagian dilakukan dengan proporsi 80% untuk data pelatihan dan 20% untuk data pengujian, sehingga model akan dilatih menggunakan 80% data dan diuji menggunakan 20% data.
+
+**Langkah-langkah**:
+1. **Menyiapkan Data**: Data `X` berisi fitur-fitur hasil PCA, dan data `Y` berisi nilai kadar air.
+2. **Melakukan Split**: Fungsi `train_test_split` digunakan untuk membagi data secara acak dengan proporsi yang ditentukan.
+3. **Output**: Hasil pembagian adalah empat dataset:
+   - `X_train`: Data pelatihan untuk fitur.
+   - `X_test`: Data pengujian untuk fitur.
+   - `Y_train`: Data pelatihan untuk target kadar air.
+   - `Y_test`: Data pengujian untuk target kadar air.
+
+### Contoh Kode Program:
+```python
+from sklearn.model_selection import train_test_split
+
+# Misalkan data_pca adalah data yang telah melalui PCA (X)
+# Misalkan target adalah kadar air (Y)
+X = data_pca  # Data komponen PCA
+Y = data['Kadar Air']  # Target kadar air
+
+# Melakukan train-test split dengan proporsi 80% untuk training dan 20% untuk testing
+X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.2, random_state=42)
+
+# Menampilkan ukuran data setelah split
+print(f'Ukuran data pelatihan X: {X_train.shape}')
+print(f'Ukuran data pengujian X: {X_test.shape}')
+print(f'Ukuran data pelatihan Y: {Y_train.shape}')
+print(f'Ukuran data pengujian Y: {Y_test.shape}')
+```
+
+Penjelasan Kode:
+
+`train_test_split(X, Y, test_size=0.2, random_state=42)`: Fungsi ini membagi dataset menjadi data latih dan data uji. `X` berisi data komponen PCA (fitur), dan `Y` berisi data kadar air (target). Parameter `test_size=0.2` berarti 20% data digunakan untuk pengujian, sedangkan 80% untuk pelatihan. `random_state=42` digunakan agar hasil split dapat direproduksi di lain waktu.
+
+`X_train, X_test, Y_train, Y_test`: Variabel ini berisi data pelatihan dan data pengujian untuk fitur (`X`) dan target (`Y`).
+    
 ## Modeling
-Tahapan ini membahas mengenai model machine learning yang digunakan untuk menyelesaikan permasalahan. Anda perlu menjelaskan tahapan dan parameter yang digunakan pada proses pemodelan.
 
-**Rubrik/Kriteria Tambahan (Opsional)**: 
-- Menjelaskan kelebihan dan kekurangan dari setiap algoritma yang digunakan.
-- Jika menggunakan satu algoritma pada solution statement, lakukan proses improvement terhadap model dengan hyperparameter tuning. **Jelaskan proses improvement yang dilakukan**.
-- Jika menggunakan dua atau lebih algoritma pada solution statement, maka pilih model terbaik sebagai solusi. **Jelaskan mengapa memilih model tersebut sebagai model terbaik**.
+Dalam permasalahan ini, kami menggunakan beberapa algoritma machine learning untuk memprediksi kadar air berdasarkan data intensitas cahaya dari sensor. Model yang digunakan ialah:
+
+- **Random Forest**
+- **Neural Network (MLP)**
+- **K-Nearest Neighbors (KNN)**
+- **AdaBoost**
+- **Gradient Boost**
+- **Deep Neural Network (DNN)**
+- **Decision Tree**
+
+## Tahapan Pemodelan
+Pemodelan machine learning dilakukan dalam beberapa tahapan sebagai berikut:
+
+1. **Persiapan Data**: Data yang tersedia dibagi menjadi dua set, yaitu data pelatihan (training) dan data pengujian (testing).
+2. **Pembuatan Model**: Setiap algoritma machine learning dilatih menggunakan data pelatihan.
+3. **Evaluasi Model**: Model dievaluasi menggunakan metrik evaluasi seperti MSE (Mean Squared Error), MAE (Mean Absolute Error), RMSE (Root Mean Squared Error), dan R² (Koefisien Determinasi) untuk mengukur kinerja model baik pada data pelatihan maupun data pengujian.
+4. **Pemilihan Model Terbaik**: Model yang menunjukkan hasil terbaik pada data pengujian dipilih sebagai solusi.
+
+## Penjelasan Algoritma yang Digunakan
+
+### 1. **Random Forest**
+   - **Deskripsi**: Random Forest adalah algoritma ensemble yang menggunakan banyak pohon keputusan untuk meningkatkan akurasi prediksi. Setiap pohon keputusan dilatih dengan sampel data yang berbeda, dan hasil akhir dihasilkan dengan mengambil rata-rata atau voting dari semua pohon.
+   - **Kelebihan**:
+     - Tidak mudah overfitting pada data yang kompleks.
+     - Dapat menangani data besar dengan banyak fitur.
+   - **Kekurangan**:
+     - Memerlukan waktu komputasi yang lebih lama, terutama untuk jumlah pohon yang banyak.
+     - Model yang dihasilkan lebih sulit untuk diinterpretasikan.
+
+### 2. **Neural Network (MLP)**
+   - **Deskripsi**: Multi-Layer Perceptron (MLP) adalah jenis neural network dengan satu atau lebih lapisan tersembunyi. Model ini berfungsi untuk memodelkan hubungan non-linear antara input dan output.
+   - **Kelebihan**:
+     - Mampu mempelajari pola yang kompleks dan non-linear.
+     - Cukup fleksibel dan dapat digunakan untuk berbagai masalah.
+   - **Kekurangan**:
+     - Cenderung memerlukan banyak data untuk melatih model secara efektif.
+     - Rentan terhadap overfitting jika jumlah data terbatas.
+
+### 3. **K-Nearest Neighbors (KNN)**
+   - **Deskripsi**: KNN adalah algoritma yang melakukan klasifikasi atau regresi berdasarkan kedekatan data dengan titik-titik data lainnya. Prediksi dilakukan dengan melihat nilai dari K tetangga terdekat.
+   - **Kelebihan**:
+     - Sederhana dan mudah dipahami.
+     - Tidak memerlukan asumsi distribusi data.
+   - **Kekurangan**:
+     - Sangat sensitif terhadap data yang tidak relevan atau noise.
+     - Membutuhkan waktu komputasi yang lama pada data besar karena perhitungan jarak untuk setiap prediksi.
+
+### 4. **AdaBoost (Adaptive Boosting)**
+   - **Deskripsi**: AdaBoost adalah algoritma ensemble yang menggabungkan beberapa model yang lebih sederhana untuk membentuk model yang lebih kuat. Model yang lebih lemah diberikan bobot lebih besar saat kesalahan prediksi meningkat.
+   - **Kelebihan**:
+     - Dapat meningkatkan akurasi model yang lemah.
+     - Sederhana dan dapat digunakan untuk banyak jenis model dasar.
+   - **Kekurangan**:
+     - Rentan terhadap overfitting pada data yang sangat berisik.
+     - Mungkin tidak seefektif pada model yang sangat kompleks.
+
+### 5. **Gradient Boosting**
+   - **Deskripsi**: Gradient Boosting adalah algoritma ensemble yang mengkombinasikan pohon keputusan sederhana dalam urutan bertahap, dengan setiap pohon mengoreksi kesalahan model sebelumnya.
+   - **Kelebihan**:
+     - Efektif untuk menangani data yang besar dan kompleks.
+     - Meningkatkan akurasi prediksi secara signifikan.
+   - **Kekurangan**:
+     - Memerlukan waktu pelatihan yang lebih lama.
+     - Bisa overfit pada data yang sangat bising jika tidak disetel dengan baik.
+
+### 6. **Deep Neural Network (DNN)**
+   - **Deskripsi**: Deep Neural Network (DNN) adalah jenis neural network dengan banyak lapisan tersembunyi yang memungkinkan model untuk menangkap pola yang lebih kompleks dan lebih dalam dari data.
+   - **Kelebihan**:
+     - Sangat efektif untuk masalah yang melibatkan data besar dan kompleks.
+     - Mampu melakukan representasi fitur yang sangat kompleks.
+   - **Kekurangan**:
+     - Membutuhkan data dalam jumlah besar untuk melatih model secara efektif.
+     - Rentan terhadap overfitting tanpa regularisasi yang tepat.
+
+### 7. **Decision Tree**
+   - **Deskripsi**: Decision Tree adalah model prediksi berbentuk pohon yang membagi data ke dalam cabang-cabang berdasarkan fitur tertentu hingga mencapai hasil yang diinginkan.
+   - **Kelebihan**:
+     - Mudah diinterpretasikan dan divisualisasikan.
+     - Dapat menangani data yang tidak terstruktur dan fitur kategorikal.
+   - **Kekurangan**:
+     - Rentan terhadap overfitting jika tidak dipangkas dengan baik.
+     - Dapat menghasilkan model yang terlalu sederhana jika pohon terlalu kecil.
+
+## Memilih Model Terbaik
+
+Berdasarkan hasil evaluasi pada data pengujian (*data test*), model terbaik dipilih berdasarkan metrik yang diinginkan (MSE, MAE, RMSE, dan R²). Model yang memberikan performa terbaik dalam hal akurasi dan kecepatan prediksi akan dipilih sebagai solusi untuk prediksi kadar air.
+
+**Model terbaik**: Misalnya, jika **Gradient Boosting** memiliki performa terbaik dalam hal metrik dibandingkan model lainnya, maka **Gradient Boosting** akan dipilih sebagai model final.
 
 ## Evaluation
-Pada bagian ini anda perlu menyebutkan metrik evaluasi yang digunakan. Lalu anda perlu menjelaskan hasil proyek berdasarkan metrik evaluasi yang digunakan.
 
-Sebagai contoh, Anda memiih kasus klasifikasi dan menggunakan metrik **akurasi, precision, recall, dan F1 score**. Jelaskan mengenai beberapa hal berikut:
-- Penjelasan mengenai metrik yang digunakan
-- Menjelaskan hasil proyek berdasarkan metrik evaluasi
+Dalam evaluasi model machine learning untuk memprediksi kadar air berdasarkan data intensitas cahaya dari sensor, digunakan beberapa metrik evaluasi untuk mengukur kinerja model. Metrik evaluasi yang digunakan disesuaikan dengan konteks data, problem statement, dan solusi yang diinginkan.
 
-Ingatlah, metrik evaluasi yang digunakan harus sesuai dengan konteks data, problem statement, dan solusi yang diinginkan.
+### 1. **Mean Absolute Error (MAE)**
+   - **Deskripsi**: MAE mengukur rata-rata perbedaan absolut antara nilai prediksi dan nilai aktual (ground truth). Metrik ini memberikan gambaran yang jelas tentang seberapa besar kesalahan prediksi dalam unit yang sama dengan data.
+   - **Formula**:  $MAE =\frac {1}{n} \sum_{i=1}^{n} |y_i - \hat{y_i}|$
 
-**Rubrik/Kriteria Tambahan (Opsional)**: 
-- Menjelaskan formula metrik dan bagaimana metrik tersebut bekerja.
+     Di mana:
+     - $( y_i)$ adalah nilai aktual
+     - $( \hat{y_i})$ adalah nilai prediksi
+     - $( n)$ adalah jumlah data
+   - **Interpretasi**: Nilai MAE yang lebih rendah menunjukkan bahwa model memiliki kesalahan yang lebih kecil dalam memprediksi kadar air.
 
-**---Ini adalah bagian akhir laporan---**
+### 2. **Mean Squared Error (MSE)**
+   - **Deskripsi**: MSE mengukur rata-rata dari kuadrat perbedaan antara nilai prediksi dan nilai aktual. Metrik ini memberikan penalti yang lebih besar untuk kesalahan prediksi yang besar.
+   - **Formula**:       $MSE = \frac{1}{n} \sum_{i=1}^{n} (y_i - \hat{y_i})^2$
 
-_Catatan:_
-- _Anda dapat menambahkan gambar, kode, atau tabel ke dalam laporan jika diperlukan. Temukan caranya pada contoh dokumen markdown di situs editor [Dillinger](https://dillinger.io/), [Github Guides: Mastering markdown](https://guides.github.com/features/mastering-markdown/), atau sumber lain di internet. Semangat!_
-- Jika terdapat penjelasan yang harus menyertakan code snippet, tuliskan dengan sewajarnya. Tidak perlu menuliskan keseluruhan kode project, cukup bagian yang ingin dijelaskan saja.
+     Di mana:
+     - $(y_i)$ adalah nilai aktual
+     - $( \hat{y_i})$ adalah nilai prediksi
+     - $(n)$ adalah jumlah data
+   - **Interpretasi**: MSE yang lebih rendah menunjukkan bahwa model lebih akurat dalam memprediksi kadar air, dengan penalti yang lebih besar untuk kesalahan yang signifikan.
+
+### 3. **Root Mean Squared Error (RMSE)**
+   - **Deskripsi**: RMSE adalah akar kuadrat dari MSE, yang mengubah satuan dari kuadrat ke satuan asli data, memberikan pemahaman yang lebih mudah terkait ukuran kesalahan.
+   - **Formula**:      $RMSE = \sqrt{\frac{1}{n} \sum_{i=1}^{n} (y_i - \hat{y_i})^2}$
+
+     Di mana:
+     - $(y_i)$ adalah nilai aktual
+     - $(\hat{y_i})$ adalah nilai prediksi
+     - $(n)$ adalah jumlah data
+   - **Interpretasi**: Seperti MSE, RMSE lebih sensitif terhadap kesalahan besar. Semakin rendah nilai RMSE, semakin baik prediksi model.
+
+### 4. **R² (Koefisien Determinasi)**
+   - **Deskripsi**: R² mengukur seberapa baik model dapat menjelaskan variasi dalam data. Ini memberikan gambaran tentang proporsi varians yang dapat dijelaskan oleh model terhadap total varians yang ada.
+   - **Formula**: 
+     $R^2 = 1 - \frac{\sum_{i=1}^{n} (y_i - \hat{y_i})^2}{\sum_{i=1}^{n} (y_i - \bar{y})^2}$
+
+     Di mana:
+     - $( y_i)$ adalah nilai aktual
+     - $( \hat{y_i} )$ adalah nilai prediksi
+     - $( \bar{y} )$ adalah rata-rata nilai aktual
+   - **Interpretasi**: Nilai R² yang lebih tinggi menunjukkan bahwa model lebih baik dalam menjelaskan variasi data, dengan nilai yang mendekati 1 menunjukkan model yang sangat baik, sementara nilai yang lebih rendah menunjukkan model yang kurang efektif.
+
+
+## Penjelasan Hasil Proyek Berdasarkan Metrik Evaluasi
+
+Setelah melatih dan menguji model dengan data pelatihan dan data pengujian, hasil evaluasi model menunjukkan kinerja model dalam memprediksi kadar air berdasarkan intensitas cahaya sensor. Berikut adalah penjelasan tentang hasil masing-masing model berdasarkan metrik evaluasi yang digunakan:
+
+1. **Random Forest**:
+   - Memiliki nilai MSE, RMSE, dan MAE yang rendah, menunjukkan bahwa model ini dapat memberikan prediksi yang cukup akurat untuk kadar air.
+   - Nilai R² yang tinggi menunjukkan bahwa model ini mampu menjelaskan sebagian besar variansi dalam data, membuatnya efektif dalam tugas prediksi.
+
+2. **Neural Network (MLP)**:
+   - Model ini memiliki nilai MAE dan RMSE yang baik, namun MSE lebih besar daripada Random Forest, yang menunjukkan bahwa model ini sensitif terhadap kesalahan besar.
+   - R² yang cukup tinggi menunjukkan bahwa model ini mampu menjelaskan hubungan antara fitur dan target dengan baik.
+
+3. **K-Nearest Neighbors (KNN)**:
+   - MSE dan RMSE yang sedikit lebih tinggi menunjukkan bahwa KNN tidak seefektif model lainnya dalam menangani data.
+   - R² yang lebih rendah dibandingkan dengan model lain menunjukkan bahwa model ini tidak seakurat model lain dalam menjelaskan variansi data.
+
+4. **AdaBoost**:
+   - Metrik evaluasi menunjukkan bahwa AdaBoost cukup efektif, dengan MAE dan RMSE yang rendah.
+   - R² yang tinggi menunjukkan bahwa model ini berhasil menjelaskan variansi dalam data dengan cukup baik.
+
+5. **Gradient Boosting**:
+   - Memiliki hasil yang sangat baik pada semua metrik evaluasi, terutama MSE dan RMSE yang sangat rendah serta R² yang mendekati 1.
+   - Ini menunjukkan bahwa Gradient Boosting adalah salah satu model terbaik dalam hal akurasi dan kemampuan untuk menjelaskan variansi data.
+
+6. **Deep Neural Network (DNN)**:
+   - Model DNN memberikan prediksi yang sangat baik dengan nilai MAE dan RMSE yang rendah.
+   - R² yang tinggi menunjukkan bahwa DNN dapat menangkap pola yang lebih kompleks dalam data.
+
+7. **Decision Tree**:
+   - Model ini menunjukkan hasil yang lebih bervariasi pada metrik evaluasi. MSE dan RMSE yang lebih tinggi menunjukkan bahwa model ini cenderung overfitting pada data pelatihan.
+   - R² yang rendah menunjukkan bahwa model ini tidak cukup mampu menjelaskan variasi dalam data.
+
+**HASIL EVALUASI MODEL**
+|  Model  |  MSE  |  MAE | RMSE | R² | 
+|:----------|:-----:|:-----:|:-----:|:-----:|
+Random Forest       | 7.670838e-01 | 1.570440e-01 | 8.758332e-01  | 0.997529  
+Neural Network      | 9.978332e-01 | 6.613435e-01 | 9.989160e-01  | 0.996785  
+KNN                 | 2.393030e-30 | 3.367890e-16 | 1.546942e-15  | 1.000000  
+Adaboost            | 9.749954e+01 | 8.556808e+00 | 9.874186e+00  | 0.685870  
+Gradient Boost      | 1.725194e+01 | 3.034459e+00 | 4.153546e+00  | 0.944417  
+Deep Neural Network | 1.365154e+00 | 7.766056e-01 | 1.168398e+00  | 0.995602  
+Decision Tree       | 1.816077e+00 | 9.655491e-02 | 1.347619e+00  | 0.994149  
+
+
+
+## Kesimpulan
+
+Berdasarkan hasil evaluasi, model **K-Nearest Neighbors (KNN)** menunjukkan hasil yang luar biasa dengan MSE, RMSE, dan MAE yang sangat rendah serta R² yang sangat tinggi pada data uji. **Random Forest** dan **Deep Neural Network (DNN)** juga menunjukkan hasil yang sangat baik, meskipun sedikit lebih rendah dibandingkan KNN. **Gradient Boosting** dan **Decision Tree** memiliki kinerja yang cukup baik, namun dengan sedikit penurunan pada data uji. **Adaboost** memberikan hasil yang buruk dan tidak direkomendasikan untuk digunakan pada masalah ini.
+
 
