@@ -101,36 +101,36 @@ Setiap pengukuran dilakukan dalam satu set data yang mencakup 18 nilai intensita
 Dalam tahap pemahaman data ini, penting untuk mengidentifikasi pola dalam hubungan antara intensitas reflektansi pada setiap channel dengan kadar air rumput laut. Analisis ini juga melibatkan penanganan data yang hilang atau noise yang mungkin ada dalam data sensor, serta normalisasi data agar model machine learning dapat mengolah data secara efektif.
 
 ### Variabel-variabel pada dataset Intensitas Reflektansi Rumput Laut adalah sebagai berikut:
-1. Fitur Input (X):
-| Nama       | Umur | Kota          |
-|:-----------|-----:|:-------------:|
-| Andi       |   25 |   Jakarta     |
-| Budi       |   30 |   Surabaya    |
-| Citra      |   22 |   Bandung     |
+1. **Fitur Input (X)**:
+   
+| Kanal     | Panjang Gelombang (nm) | Warna          |
+|:-----------|:-----:|:-------------:|
+| Kanal A    |  410 |   Violet     |
+| Kanal B |435| Violet – Biru|
+|Kanal C |460|Biru|
+|Kanal D |485|Biru – Hijau|
+|Kanal E|510|Hijau|
+|Kanal F|535|Hijau – Kuning|
+|Kanal G |560|Kuning|
+|Kanal H |585| Kuning – Jingga|
+|Kanal R |610| Jingga|
+|Kanal I |645| Jingga – Merah|
+|Kanal S |680| Merah|
+| Kanal J |705| Merah Pekat|
+| Kanal T |730|Infra merah dekat|
+| Kanal U |760|Infra merah dekat|
+| Kanal V |810|Infra merah dekat|
+| Kanal W |860| Infra merah dekat|
+| Kanal K |900| Infra merah dekat|
+| Kanal L |940| Infra merah dekat|
 
+2. Target Output (y):
+    - **Kadar Air Rumput Laut**: Nilai kontinu yang menunjukkan kadar air dalam rumput laut yang diukur pada saat pengambilan data reflektansi dari sensor.
 
-    - Kanal A (410nm, Violet): Intensitas reflektansi cahaya pada panjang gelombang 410nm
-    - Kanal B (435nm, Violet – Biru): Intensitas reflektansi cahaya pada panjang gelombang 435nm
-    - Kanal C (460nm, Biru): Intensitas reflektansi cahaya pada panjang gelombang 460nm
-    - Kanal D (485nm, Biru – Hijau): Intensitas reflektansi cahaya pada panjang gelombang 485nm
-    - Kanal E (510nm, Hijau): Intensitas reflektansi cahaya pada panjang gelombang 510nm
-    - Kanal F (535nm, Hijau – Kuning): Intensitas reflektansi cahaya pada panjang gelombang 535nm
-    - Kanal G (560nm, Kuning): Intensitas reflektansi cahaya pada panjang gelombang 560nm
-    - Kanal H (585nm, Kuning – Jingga): Intensitas reflektansi cahaya pada panjang gelombang 585nm
-    - Kanal R (610nm, Jingga): Intensitas reflektansi cahaya pada panjang gelombang 610nm
-    - Kanal I (645nm, Jingga – Merah): Intensitas reflektansi cahaya pada panjang gelombang 645nm
-    - Kanal S (680nm, Merah): Intensitas reflektansi cahaya pada panjang gelombang 680nm
-    - Kanal J (705nm, Merah Pekat): Intensitas reflektansi cahaya pada panjang gelombang 705nm
-    - Kanal T (730nm, Infra merah dekat): Intensitas reflektansi cahaya pada panjang gelombang 730nm
-    - Kanal U (760nm, Infra merah dekat): Intensitas reflektansi cahaya pada panjang gelombang 760nm
-    - Kanal V (810nm, Infra merah dekat): Intensitas reflektansi cahaya pada panjang gelombang 810nm
-    - Kanal W (860nm, Infra merah dekat): Intensitas reflektansi cahaya pada panjang gelombang 860nm
-    - Kanal K (900nm, Infra merah dekat): Intensitas reflektansi cahaya pada panjang gelombang 900nm
-    - Kanal L (940nm, Infra merah dekat): Intensitas reflektansi cahaya pada panjang gelombang 940nm
+3. Jumlah Dataset :
 
-3. Target Output (y):
-    - Kadar Air Rumput Laut: Nilai kontinu yang menunjukkan kadar air dalam rumput laut yang diukur pada saat pengambilan data reflektansi dari sensor.
-
+   - 
+5. 
 **Rubrik/Kriteria Tambahan (Opsional)**:
 - Melakukan beberapa tahapan yang diperlukan untuk memahami data, contohnya teknik visualisasi data atau exploratory data analysis.
 
