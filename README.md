@@ -245,6 +245,11 @@ plt.ylabel('PCA Komponen')
 plt.show()
 ```
 
+![Explained Variance untuk Setiap Komponen PCA](https://github.com/user-attachments/assets/8b6df56f-3f41-4d7e-a06e-aa3cd238c5b1)
+![Kumulatif Varians yang Dijelaskan oleh PCA](https://github.com/user-attachments/assets/2351cb15-ac50-4cc1-ba93-b5f8ad2e2a40)
+![Heatmap Kontribusi Setiap Kanal terhadap 6 Komponen PCA](https://github.com/user-attachments/assets/db78cf07-08ec-4b72-8a59-12ace101ac4f)
+
+
 Penjelasan Kode
 1. **Standarisasi Data**: Data fitur distandarisasi agar setiap fitur memiliki rata-rata 0 dan deviasi standar 1 menggunakan `StandardScaler`.
 2. **PCA**: Komponen utama dihitung dengan menggunakan `PCA()` dari `sklearn.decomposition`. Jumlah komponen yang digunakan ditentukan berdasarkan varians yang dijelaskan.
