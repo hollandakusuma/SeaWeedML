@@ -80,10 +80,11 @@ Rumusan Masalah dalam penelitian ini ialah:
 
 ### Solution statements
 1. Data Preprocessing: Menggunakan teknik normalisasi untuk menyiapkan data intensitas reflektansi dari 18 channel sensor AS7265X agar dapat diolah oleh model machine learning.
-2. Model Development:
+2. Analisis PCA : Menggunakan Principal Component Analysis untuk mengkombinasi fitur kanal sensor.
+3. Model Development:
     a. Neural Network digunakan untuk menangkap pola non-linear yang kompleks dalam hubungan antara intensitas cahaya dan kadar air.
     b. Random Forest digunakan untuk memberikan informasi tentang pentingnya fitur dan meningkatkan stabilitas prediksi.
-3. Hyperparameter Tuning: Menerapkan teknik seperti Grid Search atau Random Search untuk mengoptimalkan parameter model dan mencapai hasil terbaik.
+
 4. Feature Selection: Mengidentifikasi channel-channel yang paling relevan dengan kadar air rumput laut menggunakan Random Forest dan teknik lainnya.
 5. Model Evaluation: Metrik seperti Mean Absolute Error (MAE) dan Root Mean Squared Error (RMSE) akan digunakan untuk mengevaluasi performa model, memastikan prediksi yang lebih akurat dan dapat diandalkan.
 
@@ -127,7 +128,20 @@ Dalam tahap pemahaman data ini, penting untuk mengidentifikasi pola dalam hubung
     - **Kadar Air Rumput Laut**: Nilai kontinu yang menunjukkan kadar air dalam rumput laut yang diukur pada saat pengambilan data reflektansi dari sensor.
 
 **3. URL Dataset** : (https://tinyurl.com/datarumputlaut)
-   
+
+**4. Struktur Dataset**
+Dataset yang digunakan memiliki **4322 baris** dan **19 kolom**, di mana setiap baris mewakili sampel, dan kolom-kolomnya adalah fitur serta target yang akan diprediksi. **Kolom 1** berisi nilai kadar air rumput laut, **kolom 2-19** merupakan nilai intensitasi reflektansi setiap kanal.
+
+**5. Kondisi Data**
+- **Missing Values**: Tidak ditemukan nilai yang hilang (missing value) dalam dataset.
+- **Duplikasi Data**: Tidak ada baris yang terduplikasi.
+- **Outlier**: Terdapat beberapa nilai outlier pada kanal tertentu, yang teridentifikasi melalui analisis *box plot*.
+
+**6.Visualisasi Data**
+- **Box Plot**: Digunakan untuk mendeteksi keberadaan outlier pada setiap kanal sensor.
+- **Histogram Plot**: Setiap kanal dianalisis distribusinya. Pola distribusi data terlihat berbeda untuk setiap panjang gelombang, menunjukkan karakteristik unik tiap kanal.
+- **Scatter Plot**: Hubungan antara setiap kanal dengan kadar air ditampilkan untuk memahami korelasi antar fitur.
+     
 **Tahapan Data Understanding**:
 - Data Loading : Import data dari google drive
 - Preview Data: Menampilkan struktur dataset.
@@ -303,8 +317,18 @@ Pemodelan machine learning dilakukan dalam beberapa tahapan sebagai berikut:
 
 ## Penjelasan Algoritma yang Digunakan
 
+## Modeling
+
+Dalam permasalahan ini, kami menggunakan beberapa algoritma machine learning untuk memprediksi kadar air berdasarkan data intensitas cahaya dari sensor. Model yang digunakan ialah:
+
 ### 1. **Random Forest**
    - **Deskripsi**: Random Forest adalah algoritma ensemble yang menggunakan banyak pohon keputusan untuk meningkatkan akurasi prediksi. Setiap pohon keputusan dilatih dengan sampel data yang berbeda, dan hasil akhir dihasilkan dengan mengambil rata-rata atau voting dari semua pohon.
+   - **Parameter yang digunakan**:
+
+`n_estimators=100`: Model membangun 100 pohon keputusan.
+
+`random_state=42`: Parameter ini memastikan replikasi hasil dengan menetapkan nilai acak yang sama.
+
    - **Kelebihan**:
      - Tidak mudah overfitting pada data yang kompleks.
      - Dapat menangani data besar dengan banyak fitur.
@@ -314,6 +338,15 @@ Pemodelan machine learning dilakukan dalam beberapa tahapan sebagai berikut:
 
 ### 2. **Neural Network (MLP)**
    - **Deskripsi**: Multi-Layer Perceptron (MLP) adalah jenis neural network dengan satu atau lebih lapisan tersembunyi. Model ini berfungsi untuk memodelkan hubungan non-linear antara input dan output.
+
+   - **Parameter yang digunakan**:
+
+`hidden_layer_sizes=(50, 30)`: Model terdiri dari dua lapisan tersembunyi, masing-masing memiliki 50 dan 30 neuron.
+
+`max_iter=1000`: Model dilatih hingga maksimal 1.000 iterasi untuk konvergensi.
+
+`random_state=42`: Memastikan hasil yang dapat direproduksi.
+
    - **Kelebihan**:
      - Mampu mempelajari pola yang kompleks dan non-linear.
      - Cukup fleksibel dan dapat digunakan untuk berbagai masalah.
@@ -323,6 +356,8 @@ Pemodelan machine learning dilakukan dalam beberapa tahapan sebagai berikut:
 
 ### 3. **K-Nearest Neighbors (KNN)**
    - **Deskripsi**: KNN adalah algoritma yang melakukan klasifikasi atau regresi berdasarkan kedekatan data dengan titik-titik data lainnya. Prediksi dilakukan dengan melihat nilai dari K tetangga terdekat.
+   - **Parameter utama:** `n_neighbors=5`: Model menggunakan 5 tetangga terdekat dalam perhitungannya.
+
    - **Kelebihan**:
      - Sederhana dan mudah dipahami.
      - Tidak memerlukan asumsi distribusi data.
@@ -332,6 +367,12 @@ Pemodelan machine learning dilakukan dalam beberapa tahapan sebagai berikut:
 
 ### 4. **AdaBoost (Adaptive Boosting)**
    - **Deskripsi**: AdaBoost adalah algoritma ensemble yang menggabungkan beberapa model yang lebih sederhana untuk membentuk model yang lebih kuat. Model yang lebih lemah diberikan bobot lebih besar saat kesalahan prediksi meningkat.
+   - **Parameter yang digunakan:**
+
+`n_estimators=50`: Model menjalankan 50 iterasi untuk menguatkan prediksi.
+
+`random_state=42`: Menetapkan nilai awal acak untuk hasil yang dapat direplikasi.
+
    - **Kelebihan**:
      - Dapat meningkatkan akurasi model yang lemah.
      - Sederhana dan dapat digunakan untuk banyak jenis model dasar.
@@ -341,6 +382,12 @@ Pemodelan machine learning dilakukan dalam beberapa tahapan sebagai berikut:
 
 ### 5. **Gradient Boosting**
    - **Deskripsi**: Gradient Boosting adalah algoritma ensemble yang mengkombinasikan pohon keputusan sederhana dalam urutan bertahap, dengan setiap pohon mengoreksi kesalahan model sebelumnya.
+   - **Parameter yang digunakan:**
+
+`n_estimators=100`: Model membangun 100 pohon keputusan untuk memaksimalkan akurasi.
+
+`random_state=42`: Memastikan hasil yang konsisten.
+
    - **Kelebihan**:
      - Efektif untuk menangani data yang besar dan kompleks.
      - Meningkatkan akurasi prediksi secara signifikan.
@@ -350,6 +397,16 @@ Pemodelan machine learning dilakukan dalam beberapa tahapan sebagai berikut:
 
 ### 6. **Deep Neural Network (DNN)**
    - **Deskripsi**: Deep Neural Network (DNN) adalah jenis neural network dengan banyak lapisan tersembunyi yang memungkinkan model untuk menangkap pola yang lebih kompleks dan lebih dalam dari data.
+   - **Parameter yang digunakan:**
+
+Loss function: `mean_squared_error` digunakan untuk mengukur kesalahan regresi.
+
+Optimizer: `adam` untuk pembaruan bobot yang efisien.
+
+Epochs: Model dilatih selama `100 epoch`.
+
+Batch size: `32 data` diproses dalam setiap iterasi pembaruan bobot.
+
    - **Kelebihan**:
      - Sangat efektif untuk masalah yang melibatkan data besar dan kompleks.
      - Mampu melakukan representasi fitur yang sangat kompleks.
@@ -359,6 +416,7 @@ Pemodelan machine learning dilakukan dalam beberapa tahapan sebagai berikut:
 
 ### 7. **Decision Tree**
    - **Deskripsi**: Decision Tree adalah model prediksi berbentuk pohon yang membagi data ke dalam cabang-cabang berdasarkan fitur tertentu hingga mencapai hasil yang diinginkan.
+   - **Parameter yang digunakan:** `random_state=42`: Menetapkan nilai acak yang memastikan konsistensi hasil.
    - **Kelebihan**:
      - Mudah diinterpretasikan dan divisualisasikan.
      - Dapat menangani data yang tidak terstruktur dan fitur kategorikal.
@@ -461,10 +519,27 @@ Gradient Boost      | 1.725194e+01 | 3.034459e+00 | 4.153546e+00  | 0.944417
 Deep Neural Network | 1.365154e+00 | 7.766056e-01 | 1.168398e+00  | 0.995602  
 Decision Tree       | 1.816077e+00 | 9.655491e-02 | 1.347619e+00  | 0.994149  
 
+Hasil evaluasi model menunjukkan bahwa beberapa model machine learning berhasil memberikan prediksi yang sangat akurat untuk memprediksi kadar air rumput laut berdasarkan data sensor AS7265X. Berdasarkan metrik evaluasi yang digunakan, berikut adalah penjelasan dampak dari model terhadap Business Understanding:
 
+**1. Problem Statement**: Model yang dievaluasi berhasil menjawab problem statement, yaitu prediksi kadar air rumput laut. Model seperti Random Forest dan KNN memberikan hasil yang sangat baik dengan R² mendekati 1 (0.9975 dan 1.0000), yang menunjukkan bahwa model dapat menjelaskan sebagian besar variasi dalam data. Hal ini membuktikan bahwa solusi machine learning yang diusulkan efektif dalam memprediksi kadar air dengan akurasi yang tinggi.
+
+**2. Goal Achievements**: Semua tujuan yang telah ditetapkan tercapai, termasuk:
+- Membangun dan membandingkan model prediksi: Berbagai model seperti Random Forest, Neural Network, dan KNN dibandingkan, dan hasilnya menunjukkan bahwa Random Forest dan Gradient Boosting adalah yang paling optimal.
+- Pengujian model dengan metrik yang jelas (MSE, MAE, RMSE, R²) menghasilkan pemahaman yang mendalam tentang kinerja model.
+
+**3. Impact of the Solution**: Solusi yang direncanakan terbukti berdampak signifikan. Dengan kemampuan model untuk memberikan prediksi yang sangat akurat (seperti pada Random Forest dan KNN dengan nilai R² tinggi), sistem ini dapat diandalkan untuk aplikasi praktis dalam industri yang membutuhkan pemantauan kadar air secara real-time, seperti dalam pengelolaan sumber daya alam, pertanian kelautan, dan riset lingkungan. Pemilihan model terbaik berdasarkan evaluasi memungkinkan implementasi yang lebih efisien dan tepat sasaran.
+
+Dengan demikian, solusi ini tidak hanya mencapai tujuan yang diharapkan tetapi juga memberikan dampak yang besar dalam mempermudah prediksi kadar air secara cepat dan akurat, yang dapat diimplementasikan untuk berbagai aplikasi bisnis dan penelitian.
 
 ## Kesimpulan
 
 Berdasarkan hasil evaluasi, model **K-Nearest Neighbors (KNN)** menunjukkan hasil yang luar biasa dengan MSE, RMSE, dan MAE yang sangat rendah serta R² yang sangat tinggi pada data uji. **Random Forest** dan **Deep Neural Network (DNN)** juga menunjukkan hasil yang sangat baik, meskipun sedikit lebih rendah dibandingkan KNN. **Gradient Boosting** dan **Decision Tree** memiliki kinerja yang cukup baik, namun dengan sedikit penurunan pada data uji. **Adaboost** memberikan hasil yang buruk dan tidak direkomendasikan untuk digunakan pada masalah ini.
+Berdasarkan hasil evaluasi ini, dapat disimpulkan bahwa tujuan proyek telah tercapai dengan sangat baik yang dijabarkan sebagai berikut:
+1. Solusi berbasis machine learning berhasil diterapkan dan memberikan prediksi yang akurat.
+2. Melalui PCA, kanal-kanal sensor yang paling relevan dalam menentukan kadar air dapat diidentifikasi.
+3. Semua model yang direncanakan telah dibangun dan dibandingkan dengan hasil yang bervariasi, memberikan wawasan tentang pilihan model terbaik.
+4. Sistem evaluasi yang jelas telah diterapkan, memastikan bahwa model yang dihasilkan dapat diandalkan.
+5. Pengujian terhadap model memberikan hasil prediksi yang memadai untuk diterapkan dalam aplikasi dunia nyata.
 
+----------
 
